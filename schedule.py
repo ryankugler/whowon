@@ -16,7 +16,7 @@ def todaysGames():
     
     print(today.month, '/', today.day)
     for game in games:
-        #gameTimeLTZ = parser.parse(game["gameTimeUTC"]).replace(tzinfo=timezone.utc).astimezone(tz=None)
         print(schedule.format(awayTeam=game['awayTeam']['teamName'], 
                               homeTeam=game['homeTeam']['teamName'], 
                               gameTimeLTZ=game['gameStatusText']))
+        
