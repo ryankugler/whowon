@@ -6,6 +6,7 @@ Created on Fri Mar 17 15:20:55 2023
 """
 
 import boxScoreHelper
+import requests
 
 ######
 #Todo: Get all of yesterday's games
@@ -14,14 +15,22 @@ import boxScoreHelper
 
 from nba_api.live.nba.endpoints import boxscore
 from nba_api.live.nba.endpoints import scoreboard
+from datetime import date, timedelta
 #box = boxscore.BoxScore('0022000196') 
 
 score = scoreboard.ScoreBoard()
 games = scoreboard.ScoreBoard().get_dict()
-
 gameList = games["scoreboard"]["games"]
 
+##############################
+##### Previous Game Data #####
+##############################
 
-#boxDict = box.game.get_dict()
+today = date.today()
+yesterday = today - timedelta(1)
 
+print (score.score_board_date)
 
+score.score_board_date = yesterday
+
+print(score.score_board_date)
