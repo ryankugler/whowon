@@ -23,13 +23,23 @@ def getUnformattedBoxScore(game_ids):
 
     for game_id in game_ids:
         boxscore = BoxScoreTraditionalV2(game_id=game_id)
+        #team_stats = boxscore.team_stats.get_data_frame()
         players_stats = boxscore.player_stats.get_data_frame()
+        players_stats1 = players_stats[players_stats['PLAYER_NAME'] == 'PLAYER_NAME']
+        minutes,seconds = players_stats.iloc[0]['MIN'].split(':')
+        rounded_seconds = round(float(seconds))
         
-        selected_columns = ['PLAYER_NAME', 'PTS', 'REB', 'AST']
+        rounded_seconds_string = f'0{rounded_seconds}'
+        
+        print(minutes)
+        print(rounded_seconds)
+        
+       # minutes_played = f'{minutes}:{}
+        selected_columns = ['TEAM_ABBREVIATION', 'PLAYER_NAME', 'MIN', 'PTS', 'FGM', 'FGA', 'FG_PCT', 'FG3M', 'FG3A', 'FTM', 'FTA', 'REB', 'AST', 'STL', 'BLK', 'TO']
         players_stats = players_stats.loc[:,selected_columns]
         headers = players_stats.columns.values.tolist()
         rows = players_stats.values.tolist()
-        print(tabulate(rows,headers=headers))
+       # print(tabulate(rows,headers=headers))
 
 
 
