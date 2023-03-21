@@ -8,9 +8,4 @@ import schedule
 from nba_api.stats.static import players,teams
 
 
-
-#players = players.get_players()
-#teams = teams.get_teams()
-
-
 schedule.todaysGames() 

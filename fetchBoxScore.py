@@ -8,7 +8,6 @@ Created on Sat Mar 18 16:02:48 2023
 from nba_api.stats.endpoints import Scoreboard
 from datetime import datetime, timedelta
 from nba_api.stats.endpoints import BoxScoreTraditionalV2
-from tabulate import tabulate
 import json
 import csv
 
@@ -22,47 +21,27 @@ def getYesterdaysGameIDs():
     return game_ids
 
 def getUnformattedBoxScore(game_ids):
-
     for game_id in game_ids:
         boxscore = BoxScoreTraditionalV2(game_id=game_id)
-        team_stats = boxscore.team_stats.get_data_frame()
         players_stats = boxscore.player_stats.get_data_frame()
-        
-
         selected_columns = ['TEAM_ABBREVIATION', 'PLAYER_NAME', 'MIN', 'PTS', 'FGM', 'FGA', 'FG_PCT', 'FG3M', 'FG3A', 'FTM', 'FTA', 'REB', 'AST', 'STL', 'BLK', 'TO']
         players_stats = players_stats.loc[:,selected_columns]
         headers = players_stats.columns.values.tolist()
         rows = players_stats.values.tolist()
-        
-        merged_boxscore = [headers, rows]
-
+        merged_boxscore = [dict(zip(headers, row)) for row in rows]
         return merged_boxscore
-        # with open('data.csv', 'w', newline='') as f:
-            
-        #     writer = csv.writer(f)
-        #     writer.writerows(merged_boxscore)
-        
-        # csv_data = tabulate(rows,headers=headers, tablefmt='csv')
-        # reader = csv.DictReader(csv_data.splitlines())
-        # json_data = json.dumps([row for row in reader], indent=4)
-        
-        # with open ('data.json', 'w') as f:
-        #     f.write(json_data)
-        
-        
-        # print(tabulate(rows,headers=headers, tablefmt="grid"))
-
 
 def toCSV(boxscore):
     with open('data.csv', 'w', newline='') as f:
-        
         writer = csv.writer(f)
         writer.writerows(boxscore)
 
 def toJSON(boxscore):
-    return
+    with open('output.json', 'w') as f:
+        json.dump(boxscore, f, indent=4)
 
-
-
-gameids = getYesterdaysGameIDs()
-getUnformattedBoxScore(gameids)
+def getBoxScores():
+    game_ids = getYesterdaysGameIDs()
+    boxscore = getUnformattedBoxScore(game_ids)
+    toJSON(boxscore)
+    
