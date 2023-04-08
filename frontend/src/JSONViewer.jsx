@@ -1,11 +1,28 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
-function JSONViewer({ data }) {
+function JSONViewer() {
+  const [data, setData] = useState(null);
+
+  useEffect(() => {
+    async function fetchData() {
+      const response = await fetch('../backend/output.json');
+      const json = await response.json();
+      setData(json);
+      console.log('JSON data:', json)
+    }
+
+    fetchData();
+  }, []);
+
   return (
     <div>
-      <pre>{JSON.stringify(data, null, 2)}</pre>
+      {data ? (
+        <pre>{JSON.stringify(data, null, 2)}</pre>
+      ) : (
+        <p>Loading...</p>
+      )}
     </div>
   );
 }
 
-export default JSONViewer;
+export {JSONViewer};

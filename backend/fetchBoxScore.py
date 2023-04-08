@@ -37,11 +37,21 @@ def toCSV(boxscore):
         writer.writerows(boxscore)
 
 def toJSON(boxscore):
-    with open('output.json', 'w') as f:
+    with open('output_uncleaned.json', 'w') as f:
         json.dump(boxscore, f, indent=4)
+
+def removeNaN():
+    with open('output_uncleaned.json', 'r') as f:
+        data = f.read()
+    data = data.replace('NaN', '0')
+    json_data = json.loads(data)
+    with open('output.json', 'w') as f:
+        json.dump(json_data,f,indent=4)
 
 def getBoxScores():
     game_ids = getYesterdaysGameIDs()
     boxscore = getUnformattedBoxScore(game_ids)
     toJSON(boxscore)
-    
+    removeNaN()
+
+getBoxScores()

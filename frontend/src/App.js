@@ -1,27 +1,43 @@
-import './App.css';
-import React, { useState, useEffect } from 'react';
-import JSONViewer from './JSONViewer';
+import React from 'react';
+import {JSONViewer} from './JSONViewer';
 
 function App() {
-  const [data, setData] = useState(null);
-
-  useEffect(() => {
-    async function fetchData() {
-      const response = await fetch('/data.json');
-      const jsonData = await response.json();
-      setData(jsonData);
-    }
-    fetchData();
-  }, []);
-
   return (
     <div>
-      {data ? <JSONViewer data={data} /> : <p>Loading data...</p>}
+      <h1>JSON Viewer</h1>
+      <JSONViewer />
     </div>
   );
 }
 
 export default App;
+
+
+
+// import './App.css';
+// import React, { useState, useEffect } from 'react';
+// import JSONViewer from './JSONViewer';
+
+// function App() {
+//   const [data, setData] = useState(null);
+
+//   useEffect(() => {
+//     async function fetchData() {
+//       const response = await fetch('/data.json');
+//       const jsonData = await response.json();
+//       setData(jsonData);
+//     }
+//     fetchData();
+//   }, []);
+
+//   return (
+//     <div>
+//       {data ? <JSONViewer data={data} /> : <p>Loading data...</p>}
+//     </div>
+//   );
+// }
+
+// export default App;
 
 
 // function App() {
