@@ -45,7 +45,7 @@ def removeNaN():
         data = f.read()
     data = data.replace('NaN', '0')
     json_data = json.loads(data)
-    with open('output.json', 'w') as f:
+    with open('../frontend/src/output.json', 'w') as f:
         json.dump(json_data,f,indent=4)
 
 def getBoxScores():
