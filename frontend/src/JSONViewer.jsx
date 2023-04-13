@@ -33,8 +33,10 @@ function JSONViewer() {
           <thead>
             {/* create a table row for the table header */}
             <tr>
-              {/* loop through the keys of the first item in the data array and create a table header cell for each one */}
-              {Object.keys(data[0]).map((key, index) => (
+              {/* update the name of the first column to "Team" */}
+              <th key="team">Team</th>
+              {/* loop through the keys of the first item in the data array (excluding the first key) and create a table header cell for each one */}
+              {Object.keys(data[0]).slice(1).map((key, index) => (
                 <th key={index}>{key}</th>
               ))}
             </tr>
@@ -43,8 +45,8 @@ function JSONViewer() {
             {/* loop through each item in the data array and create a table row for each one */}
             {data.map((item, index) => (
               <tr key={index}>
-                {/* loop through the values of each item in the data array and create a table cell for each one */}
-                {Object.values(item).map((value, index) => (
+                {/* loop through the values of each item in the data array (excluding the value of the first key) and create a table cell for each one */}
+                {Object.values(item).slice(1).map((value, index) => (
                   <td key={index}>{value}</td>
                 ))}
               </tr>
